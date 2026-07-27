@@ -1,0 +1,13 @@
+*.py
+scripts/
+tests/
+requirements.txt
+data/raw/
+data/processed/
+notebooks/
+agents/
+subagents/
+config/
+docs/
+prompts/
+.github/
