@@ -1,0 +1,12 @@
+project:
+  name: "Migración y remesas en Ecuador"
+  country_code: ECU
+  frequency: annual
+  scope: "Análisis descriptivo nacional y comparación internacional"
+paths:
+  raw_data: data/raw/world_bank_ecuador.csv
+  clean_data: data/processed/ecuador_migracion_remesas_anual.csv
+  indicators: data/processed/indicadores_anuales.csv
+  bce_raw: data/raw/bce_remesas_trabajadores.csv
+  bce_monthly: data/processed/bce_remesas_mensuales.csv
+  diaspora_un: data/processed/ecuador_diaspora_un.csv

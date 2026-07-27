@@ -1,0 +1,15 @@
+sources:
+  - name: Banco Mundial, World Development Indicators
+    type: api
+    url: "https://api.worldbank.org/v2/country/ECU/indicator/{indicator}?format=json"
+    use: "Serie anual comparable: remesas, stock de migrantes y PIB."
+  - name: Banco Central del Ecuador, Remesas de Trabajadores
+    type: official_portal
+    url: "https://contenido.bce.fin.ec/documentos/informacioneconomica/SectorExterno/ix_Remesas.html"
+    use: "Futura desagregación mensual, provincial y por país de origen."
+    note: "El BCE cambió el esquema de publicación a microdatos desde julio de 2025; verificar comparabilidad."
+    download_url: "https://contenido.bce.fin.ec/documentos/Estadisticas/SectorExterno/BalanzaPagos/Remesas/BDD_Remesas_de_trabajadores.csv"
+  - name: Naciones Unidas, International Migrant Stock 2024 (Total, origin)
+    type: official_dataset
+    url: "https://www.un.org/development/desa/pd/content/international-migrant-stock"
+    use: "Stock de personas nacidas en Ecuador que residen en el exterior, 1990-2024."

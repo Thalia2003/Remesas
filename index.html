@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard | Migración y Remesas en Ecuador</title>
+
+  <!-- Google Fonts & Chart.js -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
+      --card-bg: rgba(30, 41, 59, 0.7);
+      --card-border: rgba(255, 255, 255, 0.1);
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent-blue: #38bdf8;
+      --accent-indigo: #818cf8;
+      --accent-emerald: #34d399;
+      --accent-amber: #fbbf24;
+      --accent-rose: #f43f5e;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-main);
+      min-height: 100vh;
+      padding: 2rem;
+    }
+
+    header {
+      max-width: 1300px;
+      margin: 0 auto 2rem auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .title-area h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      background: linear-gradient(90deg, #38bdf8, #818cf8);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .title-area p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    .badge {
+      background: rgba(56, 189, 248, 0.15);
+      border: 1px solid rgba(56, 189, 248, 0.3);
+      color: var(--accent-blue);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    /* KPI Grid */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1.25rem;
+    }
+
+    .kpi-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(255, 255, 255, 0.2);
+    }
+
+    .kpi-title {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .kpi-value {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      margin: 0.5rem 0 0.25rem 0;
+      color: #fff;
+    }
+
+    .kpi-sub {
+      font-size: 0.82rem;
+      color: var(--accent-emerald);
+    }
+
+    /* Charts Grid */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(550px, 1fr));
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+      .charts-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .chart-card {
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-header {
+      margin-bottom: 1.25rem;
+    }
+
+    .chart-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+    }
+
+    .chart-desc {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .chart-body {
+      position: relative;
+      height: 320px;
+      width: 100%;
+    }
+
+    footer {
+      max-width: 1300px;
+      margin: 3rem auto 0 auto;
+      text-align: center;
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      border-top: 1px solid var(--card-border);
+      padding-top: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="title-area">
+      <h1>Migración y Remesas en Ecuador</h1>
+      <p>Plataforma de Análisis Contextual Nacional y Global (Banco Mundial, BCE, ONU)</p>
+    </div>
+    <div class="badge">Ecuador • Datos 1990–2025</div>
+  </header>
+
+  <div class="container">
+
+    <!-- KPI Cards -->
+    <div class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-title">Remesas Recibidas (2025 Est.)</div>
+        <div class="kpi-value" id="kpi-remesas">$7.73 B</div>
+        <div class="kpi-sub">↑ 18.2% incremento anual</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Participación en el PIB</div>
+        <div class="kpi-value" id="kpi-pib">5.93%</div>
+        <div class="kpi-sub">Máximo histórico nacional</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Diáspora en el Exterior (ONU 2024)</div>
+        <div class="kpi-value" id="kpi-diaspora">747.7 K</div>
+        <div class="kpi-sub">Ecuatorianos residentes registrados</div>
+      </div>
+      <div class="kpi-card">
+        <div class="kpi-title">Principal Origen (BCE)</div>
+        <div class="kpi-value">EE. UU.</div>
+        <div class="kpi-sub">Seguido de España e Italia</div>
+      </div>
+    </div>
+
+    <!-- Charts Row 1 -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Evolución de Remesas Anuales y % del PIB</div>
+          <div class="chart-desc">Serie histórica de remesas recibidas en miles de millones de USD vs % del PIB (1990-2025)</div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartAnnual"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Remesas Mensuales (Microdatos BCE)</div>
+          <div class="chart-desc">Flujo de remesas mensuales recibidas (Millones de USD)</div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartMonthly"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row 2 -->
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Principales Países de Origen</div>
+          <div class="chart-desc">Origen de giros recibidos según registros del BCE</div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartCountries"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Principales Provincias Destino</div>
+          <div class="chart-desc">Recepción de remesas por provincia ecuatoriana (Millones USD)</div>
+        </div>
+        <div class="chart-body">
+          <canvas id="chartProvinces"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row 3 -->
+    <div class="charts-grid" style="grid-template-columns: 1fr;">
+      <div class="chart-card">
+        <div class="chart-header">
+          <div class="chart-title">Stock de la Diáspora Ecuatoriana en el Exterior</div>
+          <div class="chart-desc">Estimación quinquenal de las Naciones Unidas (DESA, International Migrant Stock)</div>
+        </div>
+        <div class="chart-body" style="height: 280px;">
+          <canvas id="chartDiaspora"></canvas>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Proyecto Reproducible: Análisis de Migración y Remesas en Ecuador • Fuentes: Banco Mundial (WDI), BCE y Naciones Unidas (UN DESA)</p>
+  </footer>
+
+  <script>
+    async function loadDashboard() {
+      const response = await fetch('./data/dashboard_data.json');
+      const data = await response.json();
+
+      Chart.defaults.color = '#94a3b8';
+      Chart.defaults.font.family = 'Inter';
+
+      // 1. Annual Chart
+      new Chart(document.getElementById('chartAnnual'), {
+        type: 'line',
+        data: {
+          labels: data.annual.years,
+          datasets: [
+            {
+              label: 'Remesas (Miles de Millones USD)',
+              data: data.annual.remesas_usd,
+              borderColor: '#38bdf8',
+              backgroundColor: 'rgba(56, 189, 248, 0.1)',
+              fill: true,
+              tension: 0.3,
+              yAxisID: 'y'
+            },
+            {
+              label: '% del PIB',
+              data: data.annual.pct_pib,
+              borderColor: '#fbbf24',
+              borderDash: [5, 5],
+              tension: 0.3,
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          interaction: { mode: 'index', intersect: false },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: {
+              type: 'linear', display: true, position: 'left',
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              title: { display: true, text: 'USD Billones' }
+            },
+            y1: {
+              type: 'linear', display: true, position: 'right',
+              grid: { drawOnChartArea: false },
+              title: { display: true, text: '% PIB' }
+            }
+          }
+        }
+      });
+
+      // 2. Monthly BCE Chart
+      new Chart(document.getElementById('chartMonthly'), {
+        type: 'bar',
+        data: {
+          labels: data.bce_monthly.dates,
+          datasets: [{
+            label: 'Remesas Mensuales (MUSD)',
+            data: data.bce_monthly.remesas_millones,
+            backgroundColor: '#818cf8',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { display: false } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: 'Millones USD' } }
+          }
+        }
+      });
+
+      // 3. Countries Chart
+      new Chart(document.getElementById('chartCountries'), {
+        type: 'bar',
+        data: {
+          labels: data.top_countries.countries,
+          datasets: [{
+            label: 'Remesas (Millones USD)',
+            data: data.top_countries.remesas_millones,
+            backgroundColor: '#38bdf8',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+
+      // 4. Provinces Chart
+      new Chart(document.getElementById('chartProvinces'), {
+        type: 'bar',
+        data: {
+          labels: data.top_provinces.provinces,
+          datasets: [{
+            label: 'Remesas (Millones USD)',
+            data: data.top_provinces.remesas_millones,
+            backgroundColor: '#fbbf24',
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: { legend: { display: false } },
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { grid: { display: false } }
+          }
+        }
+      });
+
+      // 5. Diaspora Chart
+      new Chart(document.getElementById('chartDiaspora'), {
+        type: 'line',
+        data: {
+          labels: data.diaspora.years,
+          datasets: [{
+            label: 'Ecuatorianos en el Exterior (Miles)',
+            data: data.diaspora.stock_miles,
+            borderColor: '#34d399',
+            backgroundColor: 'rgba(52, 211, 153, 0.15)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            x: { grid: { color: 'rgba(255,255,255,0.05)' } },
+            y: { grid: { color: 'rgba(255,255,255,0.05)' }, title: { display: true, text: 'Miles de Personas' } }
+          }
+        }
+      });
+    }
+
+    loadDashboard();
+  </script>
+</body>
+</html>

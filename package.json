@@ -1,0 +1,18 @@
+{
+  "name": "remesas-ecuador",
+  "version": "1.0.0",
+  "description": "Análisis del contexto nacional y global: migración y remesas en Ecuador",
+  "main": "index.html",
+  "scripts": {
+    "start": "python -m http.server 8000"
+  },
+  "keywords": [
+    "ecuador",
+    "remesas",
+    "migracion",
+    "bce",
+    "world-bank"
+  ],
+  "author": "",
+  "license": "MIT"
+}

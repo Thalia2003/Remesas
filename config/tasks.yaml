@@ -1,0 +1,27 @@
+tasks:
+  - id: download_wdi
+    output: data/raw/world_bank_ecuador.csv
+  - id: clean_annual_series
+    input: data/raw/world_bank_ecuador.csv
+    output: data/processed/ecuador_migracion_remesas_anual.csv
+  - id: validate_series
+    input: data/processed/ecuador_migracion_remesas_anual.csv
+  - id: calculate_indicators
+    output: data/processed/indicadores_anuales.csv
+  - id: download_un_diaspora
+    output: data/raw/un_migrant_stock_by_origin.xlsx
+  - id: import_un_diaspora
+    input: data/raw/un_migrant_stock_by_origin.xlsx
+    output: data/processed/ecuador_diaspora_un.csv
+  - id: download_bce_monthly
+    output: data/raw/bce_remesas_trabajadores.csv
+  - id: profile_and_clean_bce_monthly
+    input: data/raw/bce_remesas_trabajadores.csv
+    output: data/processed/bce_remesas_mensuales.csv
+  - id: diagnostic_migration_remittances
+    input:
+      - data/processed/ecuador_migracion_remesas_anual.csv
+      - data/processed/ecuador_diaspora_un.csv
+    output:
+      - reports/diagnostico_anual.md
+      - reports/charts/remesas_vs_diaspora.png
