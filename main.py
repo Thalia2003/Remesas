@@ -87,6 +87,7 @@ def run_reports_and_charts() -> None:
     import generate_charts
     import generate_report
     import export_dashboard_data
+    import generate_doc_and_pdf
 
     processed_annual = ROOT_DIR / "data" / "processed" / "ecuador_migracion_remesas_anual.csv"
     diaspora_csv = ROOT_DIR / "data" / "processed" / "ecuador_diaspora_un.csv"
@@ -99,6 +100,8 @@ def run_reports_and_charts() -> None:
     generate_charts.main(bce_csv, charts_dir)
     generate_report.main(bce_csv, bce_report)
     export_dashboard_data.export_data()
+    generate_doc_and_pdf.build_docx()
+    generate_doc_and_pdf.build_pdf()
 
 
 def run_tests() -> None:
